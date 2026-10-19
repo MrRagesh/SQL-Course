@@ -78,28 +78,97 @@ select * from Appointments;
 
 -- Level 1 — WHERE
 -- 1. Display all patients who live in Chennai.
+
 select
 patient_id,first_name,last_name,date_of_birth,city
 from Patients where city = 'Chennai';
+
 -- 2.Display all patients whose gender is Female. 
+
 select
 patient_id,first_name,last_name,date_of_birth,city,gender
 from Patients where gender = 'Female';
+
 -- 3.Display all doctors whose specialization is Cardiology. 
+
 select 
 doctor_id, doctor_name, specialization, phone ,experience_year
 from Doctors where specialization = 'Cardiology';
+
 -- 4.Display all appointments whose status is Scheduled. 
+
 select 
 appointment_id, patient_id, doctor_id ,appointment_date ,appointment_time, status
 from Appointments where status = 'Scheduled';
+
 -- 5.Display all patients born after 1 January 2000.
+
 select
 first_name ,last_name, gender ,date_of_birth, phone, city
 from Patients where date_of_birth > '2000-01-01';
 
+-- Level 2 — GROUP BY
+-- 1.Count the number of patients in each city. 
 
+select
+city,
+count(patient_id) as patient_count
+from Patients
+group by city;
 
+-- 2.Count the number of patients in each gender.
+select 
+gender,count(patient_id) as patient_count
+from Patients
+group by gender;
+
+-- 3.Count the number of doctors in each specialization.
+select 
+specialization,
+count(doctor_id) as special_count
+from Doctors
+group by specialization;
+
+-- 4.Count the number of appointments for each status.
+select 
+status,
+count(appointment_id) as app_count
+from Appointments
+group by status;
+
+-- 5.Count the number of appointments for each doctor.
+select
+doctor_id,
+count(appointment_id) as doc_count
+from Appointments
+group by doctor_id;
+
+-- Level 3 - HAVING
+-- 1. Display the cities that have more than one patient.
+select
+city,
+count(patient_id) as patient_count
+from Patients
+group by city
+having patient_count > 1;
+
+-- 2.Display the genders that have more than 3 patients.
+select
+gender,
+count(patient_id) as patient_count
+from Patients
+group by gender
+having patient_count > 3;
+
+-- 3.Display the specializations that have at least 2 doctors. 
+select
+specialization,
+count(doctor_id) as doc_count
+from Doctors
+group by specialization
+having doc_count >= 2;
+
+-- 4.Display appointment statuses that have fewer than 5 appointments.
 
 
 
