@@ -169,8 +169,12 @@ group by specialization
 having doc_count >= 2;
 
 -- 4.Display appointment statuses that have fewer than 5 appointments.
-
-
+select 
+status,
+count(appointment_id) as appo_count
+ from Appointments
+ group by status
+ having appo_count < 5;
 
 
 
